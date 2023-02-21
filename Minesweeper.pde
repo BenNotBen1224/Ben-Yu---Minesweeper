@@ -17,20 +17,18 @@ void setup ()
     Interactive.make( this );
     
     //your code to initialize buttons goes here
-    //for(int i = 0; i < NUM_ROWS; i += 1){
-    //  for(int j = 0; j < NUM_COLS; j+= 1){
-    //    buttons[i][j] = "";
-    //  }
-    //}
-    
-    
+    for(int i = 0; i < NUM_ROWS; i += 1){
+      for(int j = 0; j < NUM_COLS; j+= 1){
+        buttons[i][j] = new MSButton(i, j);
+      }
+    }
     setMines();
 }
 public void setMines()
 {
     //your code
-    mines.add(new MSButton((int)(Math.random()*(NUM_ROWS+1)), (int)(Math.random()*(NUM_COLS+1))));
     
+      mines.add(new MSButton((int)(Math.random()*(NUM_ROWS+1)), (int)(Math.random()*(NUM_COLS+1))));
 }
 
 public void draw ()
@@ -61,6 +59,9 @@ public int countMines(int row, int col)
 {
     int numMines = 0;
     //your code here
+    for(int i = -1; i < 1; i += 1){
+      for(int j = -1; j < 1; j += 1){
+        if(
     return numMines;
 }
 public class MSButton
@@ -88,13 +89,14 @@ public class MSButton
     {
         clicked = true;
         //your code here
+        
     }
     public void draw () 
     {    
         if (flagged)
             fill(0);
-        // else if( clicked && mines.contains(this) ) 
-        //     fill(255,0,0);
+        else if(clicked && mines.contains(this) ) 
+            fill(255,0,0);
         else if(clicked)
             fill( 200 );
         else 
