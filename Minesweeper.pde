@@ -18,6 +18,7 @@ void setup ()
     Interactive.make( this );
     
     //your code to initialize buttons goes here
+    //assign an oject to the whole 2d array
     for(int i = 0; i < NUM_ROWS; i += 1){
       for(int j = 0; j < NUM_COLS; j+= 1){
         buttons[i][j] = new MSButton(i, j);
@@ -28,6 +29,7 @@ void setup ()
 public void setMines()
 {
     //your code
+    //randomly generate mine and avoid repetition
     MSButton test;
     for(int i = 0; i < NUM_MINES; i += 1){
       test = new MSButton((int)(Math.random()*(NUM_ROWS+1)), (int)(Math.random()*(NUM_COLS+1)));
@@ -36,13 +38,6 @@ public void setMines()
       else
         i -= 1;
     }
-    //for(int i = 0; i < NUM_MINES; i += 1){
-    //  mines.add(new MSButton((int)(Math.random()*(NUM_ROWS+1)), (int)(Math.random()*(NUM_COLS+1))));
-    //  for(int j = 0; j < mines.size() - 1; j += 1){
-    //    if(mines.get(j) == mines.get(mines.size() - 1))
-    //      i = i - 1;
-    //  }
-    //}
 }
 
 public void draw ()
@@ -79,7 +74,7 @@ public boolean isValid(int row, int col)
 }
 public int countMines(int row, int col)
 {
-    int numMines = 0;
+    int numMines = -1;
     //your code here
     for(int i = -1; i <= 1; i += 1){
       for(int j = -1; j <= 1; j += 1){
@@ -114,52 +109,58 @@ public class MSButton
     {
         clicked = true;
         //your code here
+        //right button clicked and unclicked
         if(mouseButton == RIGHT){
-          flagged = false;
           if(flagged == false)
+            flagged = true;
+          else{
+            flagged = false;
             clicked = false;
+          }
         }
-        else if(mines.contains(this))
+        //mine detected
+        else if(mines.contains(this)){
           displayLosingMessage();
+        }
+        //safe but with other mines around
         else if(countMines(myRow, myCol) > 0){
           myLabel += countMines(myRow, myCol);
           textSize(6);
-          text(countMines(myRow, myCol), x, y);
+          text(myLabel, x, y);
         }
         else
-          //recurse surrounding units
+          //safe but without other mines around, so clear out nearby area
           for(int i = -1; i <= 1; i += 1){
             for(int j = -1; j <= 1; j += 1){
               new MSButton(myRow + i, myCol + j).mousePressed();
             }
-          }
-            
+          }   
     }
     public void draw () 
     {    
         if (flagged)
-            fill(0);
+            fill(255, 255, 0);
         else if(clicked && mines.contains(this) ) 
             fill(255,0,0);
         else if(clicked)
-            fill( 200 );
+            fill(100, 100, 100);
         else 
-            fill( 100 );
+            fill(225,225,225);
 
         rect(x, y, width, height);
         fill(0);
         text(myLabel,x+width/2,y+height/2);
     }
-    public void setLabel(String newLabel)
-    {
-        myLabel = newLabel;
-    }
-    public void setLabel(int newLabel)
-    {
-        myLabel = ""+ newLabel;
-    }
-    public boolean isFlagged()
-    {
-        return flagged;
-    }
+    //public void setLabel(String newLabel)
+    //{
+    //    myLabel = newLabel;
+    //}
+    //public void setLabel(int newLabel)
+    //{
+    //    myLabel = ""+ newLabel;
+    //}
+    //public boolean isFlagged()
+    //{
+    //    return flagged;
+    //}
 }
