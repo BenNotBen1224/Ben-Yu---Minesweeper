@@ -1,11 +1,15 @@
 import de.bezier.guido.*;
+
 public final static int NUM_ROWS = 25;
 public final static int NUM_COLS = 25;
 public final static int NUM_MINES = (int)(Math.random()*30) + NUM_ROWS*NUM_COLS/10;
+
 //2d array of minesweeper buttons
 private MSButton[][] buttons = new MSButton[NUM_ROWS][NUM_COLS]; 
+
 //ArrayList of just the minesweeper buttons that are mined
 private ArrayList <MSButton> mines = new ArrayList <MSButton>(); 
+
 public boolean isLost;
 
 void setup ()
@@ -157,7 +161,6 @@ public class MSButton
               mines.contains(buttons[myRow + i][myCol + j]) == false && 
               buttons[myRow + i][myCol + j].clicked == false &&
               buttons[myRow + i][myCol + j].flagged == false)
-              //(i != 0 || j != 0))
               buttons[myRow + i][myCol + j].mousePressed();
           }
         }
@@ -186,14 +189,13 @@ public class MSButton
             count += 1;
         }
       }
-      if (Integer.parseInt(myLabel) == count && clicked == true) {
+      if (parseInt(myLabel) == count && clicked == true) {
         for (int i = 1; i >= -1; i -= 1) {
           for (int j = 1; j >= -1; j -= 1) {
             if (isValid(myRow + i, myCol + j) && 
               mines.contains(buttons[myRow + i][myCol + j]) == false && 
               buttons[myRow + i][myCol + j].clicked == false &&
               buttons[myRow + i][myCol + j].flagged == false)
-              //(i != 0 || j != 0))
               buttons[myRow + i][myCol + j].mousePressed();
           }
         }
