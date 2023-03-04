@@ -1,7 +1,7 @@
 import de.bezier.guido.*;
 public final static int NUM_ROWS = 25;
 public final static int NUM_COLS = 25;
-public final static int NUM_MINES = (int)(Math.random()*10) + NUM_ROWS*NUM_COLS/10;
+public final static int NUM_MINES = (int)(Math.random()*30) + NUM_ROWS*NUM_COLS/10;
 //2d array of minesweeper buttons
 private MSButton[][] buttons = new MSButton[NUM_ROWS][NUM_COLS]; 
 //ArrayList of just the minesweeper buttons that are mined
@@ -73,8 +73,9 @@ public void displayMessage()
     text("How did you win? Insane!", width/2, height/2);
   }
   if (isLost) {
-    textSize(100);
+    textSize(60);
     text("You Lost", width/2, height/2);
+    text("Refresh the page to restart", width/2, height/2 + 100);
   }
   textSize(20);
 }
@@ -168,7 +169,7 @@ public class MSButton
   {    
     if (flagged)
       fill(255, 255, 0);
-    else if (/*clicked &&*/ mines.contains(this) )
+    else if (clicked && mines.contains(this) )
       fill(255, 0, 0);
     else if (clicked)
       fill(175, 175, 175);
