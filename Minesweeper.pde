@@ -173,7 +173,7 @@ public class MSButton
     if (flagged)
       fill(255, 255, 0);
     else if (clicked && mines.contains(this) )
-      fill(255, 0, 0);
+      fill((int)(Math.random()*256), (int)(Math.random()*256), (int)(Math.random()*256));
     else if (clicked)
       fill(175, 175, 175);
     else
@@ -208,9 +208,11 @@ public class MSButton
               count += 1;
           }
         }
-        if (count > 0)
+        if (count > 0){
           isLost = true;
-        else 
+          fill((int)(Math.random()*256), (int)(Math.random()*256), (int)(Math.random()*256));
+        }
+        else
           isLost = false;
       }
     }
