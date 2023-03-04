@@ -130,7 +130,7 @@ public class MSButton
   public void mousePressed ()
   { 
     //responses to right click
-    if ((mouseButton == RIGHT || (mouseButton == LEFT && key == 'z'))&& clicked == false) {
+    if ((mouseButton == RIGHT || (mouseButton == LEFT && key == 'z')) && clicked == false) {
       if (flagged == false) {
         flagged = true;
       } else if (flagged == true ) {
@@ -200,8 +200,19 @@ public class MSButton
           }
         }
       }
-      else
-        isLost = true;
+      else{
+        count = 0;
+        for (int i = 1; i >= -1; i -= 1) {
+          for (int j = 1; j >= -1; j -= 1) {
+            if(buttons[myRow + i][myCol + j].flagged)
+              count += 1;
+          }
+        }
+        if (count > 0)
+          isLost = true;
+        else 
+          isLost = false;
+      }
     }
     rect(x, y, width, height);
     fill(0);
