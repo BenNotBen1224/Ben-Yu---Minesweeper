@@ -126,7 +126,7 @@ public class MSButton
   public void mousePressed ()
   { 
     //responses to right click
-    if (mouseButton == RIGHT && clicked == false) {
+    if ((mouseButton == RIGHT || (mouseButton == LEFT && key == 'z'))&& clicked == false) {
       if (flagged == false) {
         flagged = true;
       } else if (flagged == true ) {
