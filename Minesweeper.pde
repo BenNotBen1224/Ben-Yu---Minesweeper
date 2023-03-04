@@ -198,6 +198,8 @@ public class MSButton
           }
         }
       }
+      else
+        isLost = true;
     }
     rect(x, y, width, height);
     fill(0);
