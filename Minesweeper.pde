@@ -1,8 +1,8 @@
 import de.bezier.guido.*;
 
-public final static int NUM_ROWS = 25;
-public final static int NUM_COLS = 25;
-public final static int NUM_MINES = (int)(Math.random()*30) + NUM_ROWS*NUM_COLS/10;
+public final static int NUM_ROWS = 10;
+public final static int NUM_COLS = 10;
+public final static int NUM_MINES = (int)(Math.random()*10) + NUM_ROWS*NUM_COLS/10;
 
 //2d array of minesweeper buttons
 private MSButton[][] buttons = new MSButton[NUM_ROWS][NUM_COLS]; 
@@ -75,6 +75,7 @@ public void displayMessage()
   if (isWon()) {
     textSize(60);
     text("How did you win? Insane!", width/2, height/2);
+    text("Refresh the page to restart", width/2, height/2 + 100);
   }
   if (isLost) {
     textSize(60);
@@ -147,12 +148,12 @@ public class MSButton
       if (countMines(myRow, myCol) > 0  && flagged == false && !mines.contains(this)) {
         setLabel(countMines(myRow, myCol));
       }
-      
+
       //mine detected
       else if (mines.contains(this)) {
         isLost = true;
       } 
-      
+
       //safe but without other mines around, so clear out nearby area
       else if (!mines.contains(buttons[myRow][myCol]) && doubleclicked == false) {
         for (int i = 1; i >= -1; i -= 1) {
@@ -184,36 +185,37 @@ public class MSButton
       int count = 0;
       for (int i = 1; i >= -1; i -= 1) {
         for (int j = 1; j >= -1; j -= 1) { 
-          if (buttons[myRow + i][myCol + j].flagged == true && 
+          if (isValid(myRow + i, myCol + j) &&
+            buttons[myRow + i][myCol + j].flagged == true && 
             mines.contains(buttons[myRow + i][myCol + j]))
-            count += 1;
+              count += 1;
         }
       }
-      if (parseInt(myLabel) == count && clicked == true) {
+      if (parseInt(myLabel) == count) {
         for (int i = 1; i >= -1; i -= 1) {
           for (int j = 1; j >= -1; j -= 1) {
-            if (isValid(myRow + i, myCol + j) && 
+            if (//isValid(myRow + i, myCol + j) && 
               mines.contains(buttons[myRow + i][myCol + j]) == false && 
               buttons[myRow + i][myCol + j].clicked == false &&
               buttons[myRow + i][myCol + j].flagged == false)
               buttons[myRow + i][myCol + j].mousePressed();
           }
         }
-      }
-      else{
+      } else {
         count = 0;
         for (int i = 1; i >= -1; i -= 1) {
           for (int j = 1; j >= -1; j -= 1) {
-            if(buttons[myRow + i][myCol + j].flagged)
+            if (buttons[myRow + i][myCol + j].flagged &&
+              !mines.contains(buttons[myRow + i][myCol + j]))
               count += 1;
           }
         }
-        if (count > 0){
+        if (count > 0) {
           isLost = true;
           fill((int)(Math.random()*256), (int)(Math.random()*256), (int)(Math.random()*256));
-        }
-        else
+        } else
           isLost = false;
+        System.out.println(1);
       }
     }
     rect(x, y, width, height);
