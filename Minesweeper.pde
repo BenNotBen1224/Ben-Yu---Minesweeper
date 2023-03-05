@@ -210,7 +210,8 @@ public class MSButton
               mines.contains(buttons[myRow + i][myCol + j]) == false && 
               buttons[myRow + i][myCol + j].clicked == false &&
               buttons[myRow + i][myCol + j].flagged == false &&
-              mouseButton != RIGHT)
+              mouseButton != RIGHT ||
+              (mouseButton == LEFT && key == 'z'))
               buttons[myRow + i][myCol + j].mousePressed();
           }
         }
@@ -227,7 +228,6 @@ public class MSButton
           isLost = true;
         } else
           isLost = false;
-        System.out.println(1);
       }
     }
     rect(x, y, width, height);
