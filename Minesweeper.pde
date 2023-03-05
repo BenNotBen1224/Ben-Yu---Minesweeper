@@ -30,8 +30,7 @@ void setup ()
   setMines();
 }
 
-public void draw(){
-  
+public void draw() {
 }
 
 public void setMines()
@@ -108,14 +107,14 @@ public int countMines(int row, int col)
   return numMines;
 }
 
-public void displayMine(){
-  if (isLost == true){
-  for (int i = 0; i < NUM_ROWS; i += 1) {
-    for (int j = 0; j < NUM_COLS; j += 1) {
-      if(mines.contains(buttons[i][j]))
-        buttons[i][j].clicked = true;
+public void displayMine() {
+  if (isLost == true) {
+    for (int i = 0; i < NUM_ROWS; i += 1) {
+      for (int j = 0; j < NUM_COLS; j += 1) {
+        if (mines.contains(buttons[i][j]))
+          buttons[i][j].clicked = true;
+      }
     }
-  }
   }
 }
 
@@ -138,12 +137,12 @@ public class MSButton
     flagged = clicked = doubleclicked = false;
     Interactive.add( this ); // register it with the manager
   }
-  
+
   // called by manager
   public void mousePressed ()
   { 
     //responses to right click
-    if ((mouseButton == RIGHT || (mouseButton == LEFT && key == 'z')) && clicked == false) {
+    if (mouseButton == RIGHT && clicked == false) {
       if (flagged == false) {
         flagged = true;
       } else if (flagged == true ) {
@@ -185,7 +184,7 @@ public class MSButton
   {    
     if (flagged)
       fill(255, 255, 0);
-    else if (clicked &&  mines.contains(this) )
+    else if (clicked && mines.contains(this) )
       fill((int)(Math.random()*256), (int)(Math.random()*256), (int)(Math.random()*256));
     else if (clicked)
       fill(175, 175, 175);
@@ -200,7 +199,7 @@ public class MSButton
           if (isValid(myRow + i, myCol + j) &&
             buttons[myRow + i][myCol + j].flagged == true && 
             mines.contains(buttons[myRow + i][myCol + j]))
-              count += 1;
+            count += 1;
         }
       }
       if (parseInt(myLabel) == count) {
@@ -210,8 +209,7 @@ public class MSButton
               mines.contains(buttons[myRow + i][myCol + j]) == false && 
               buttons[myRow + i][myCol + j].clicked == false &&
               buttons[myRow + i][myCol + j].flagged == false &&
-              (mouseButton != RIGHT ||
-              (mouseButton == LEFT && key == 'z')))
+              mouseButton != RIGHT)
               buttons[myRow + i][myCol + j].mousePressed();
           }
         }
