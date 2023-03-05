@@ -210,8 +210,8 @@ public class MSButton
               mines.contains(buttons[myRow + i][myCol + j]) == false && 
               buttons[myRow + i][myCol + j].clicked == false &&
               buttons[myRow + i][myCol + j].flagged == false &&
-              mouseButton != RIGHT ||
-              (mouseButton == LEFT && key == 'z'))
+              (mouseButton != RIGHT ||
+              (mouseButton == LEFT && key == 'z')))
               buttons[myRow + i][myCol + j].mousePressed();
           }
         }
