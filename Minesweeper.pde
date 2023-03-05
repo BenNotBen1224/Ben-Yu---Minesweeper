@@ -1,8 +1,8 @@
 import de.bezier.guido.*;
 
-public final static int NUM_ROWS = 10;
-public final static int NUM_COLS = 10;
-public final static int NUM_MINES = (int)(Math.random()*10) + NUM_ROWS*NUM_COLS/10;
+public final static int NUM_ROWS = 15;
+public final static int NUM_COLS = 15;
+public final static int NUM_MINES = (int)(Math.random()*15) + NUM_ROWS*NUM_COLS/10;
 
 //2d array of minesweeper buttons
 private MSButton[][] buttons = new MSButton[NUM_ROWS][NUM_COLS]; 
@@ -30,6 +30,10 @@ void setup ()
   setMines();
 }
 
+public void draw(){
+  
+}
+
 public void setMines()
 {
   //your code
@@ -44,11 +48,6 @@ public void setMines()
     else
       i -= 1;
   }
-}
-
-//useless
-public void draw ()
-{
 }
 
 public boolean isWon()
@@ -73,11 +72,13 @@ public void displayMessage()
   fill((float)(Math.random()*256));
 
   if (isWon()) {
+    displayMine();
     textSize(60);
     text("How did you win? Insane!", width/2, height/2);
     text("Refresh the page to restart", width/2, height/2 + 100);
   }
   if (isLost) {
+    displayMine();
     textSize(60);
     text("You Lost", width/2, height/2);
     text("Refresh the page to restart", width/2, height/2 + 100);
@@ -107,6 +108,17 @@ public int countMines(int row, int col)
   return numMines;
 }
 
+public void displayMine(){
+  if (isLost == true){
+  for (int i = 0; i < NUM_ROWS; i += 1) {
+    for (int j = 0; j < NUM_COLS; j += 1) {
+      if(mines.contains(buttons[i][j]))
+        buttons[i][j].clicked = true;
+    }
+  }
+  }
+}
+
 public class MSButton
 {
   private int myRow, myCol;
@@ -126,7 +138,7 @@ public class MSButton
     flagged = clicked = doubleclicked = false;
     Interactive.add( this ); // register it with the manager
   }
-
+  
   // called by manager
   public void mousePressed ()
   { 
@@ -173,7 +185,7 @@ public class MSButton
   {    
     if (flagged)
       fill(255, 255, 0);
-    else if (clicked && mines.contains(this) )
+    else if (clicked &&  mines.contains(this) )
       fill((int)(Math.random()*256), (int)(Math.random()*256), (int)(Math.random()*256));
     else if (clicked)
       fill(175, 175, 175);
@@ -194,10 +206,11 @@ public class MSButton
       if (parseInt(myLabel) == count) {
         for (int i = 1; i >= -1; i -= 1) {
           for (int j = 1; j >= -1; j -= 1) {
-            if (//isValid(myRow + i, myCol + j) && 
+            if (isValid(myRow + i, myCol + j) && 
               mines.contains(buttons[myRow + i][myCol + j]) == false && 
               buttons[myRow + i][myCol + j].clicked == false &&
-              buttons[myRow + i][myCol + j].flagged == false)
+              buttons[myRow + i][myCol + j].flagged == false &&
+              mouseButton != RIGHT)
               buttons[myRow + i][myCol + j].mousePressed();
           }
         }
@@ -212,7 +225,6 @@ public class MSButton
         }
         if (count > 0) {
           isLost = true;
-          fill((int)(Math.random()*256), (int)(Math.random()*256), (int)(Math.random()*256));
         } else
           isLost = false;
         System.out.println(1);
